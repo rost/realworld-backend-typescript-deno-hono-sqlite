@@ -1,5 +1,7 @@
-import { serve } from "std/http/server.ts"
+import { serve } from "std/http/server.ts";
 
-import app from "@/app.ts"
+import app from "@/app.ts";
 
-serve(app.fetch)
+app.database.initialise("conduit");
+
+serve(app.api.fetch);
