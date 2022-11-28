@@ -1,6 +1,6 @@
 {
   "imports": {
-    "@/": "./",
+    "@/": "./src/",
     "std/": "https://deno.land/std@0.166.0/",
     "hono/": "https://deno.land/x/hono@v2.5.6/",
     "bcrypt": "https://deno.land/x/bcrypt@v0.4.1/mod.ts",
