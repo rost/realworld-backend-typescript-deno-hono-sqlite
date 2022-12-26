@@ -7,7 +7,7 @@ import { DB, RowObject } from "sqlite";
 import database from "@/database.ts";
 import log from "@/utils.ts";
 
-export interface User {
+export interface User extends RowObject {
     id: string;
     username: string;
     email: string;
@@ -23,7 +23,7 @@ const create = async (userPayload: { username: string; password: string, email: 
 
     let res;
     try {
-        res = db.queryEntries("INSERT INTO users (username, password, email) VALUES (?, ?, ?) RETURNING *", [username, hash, email]);
+        res = db.queryEntries<User>("INSERT INTO users (username, password, email) VALUES (?, ?, ?) RETURNING *", [username, hash, email]);
     } catch (error) {
         log.error(`${error}`);
     }
@@ -43,7 +43,7 @@ const login = (userCredentials: { email: string; password: string }) => {
     const db = new DB(database.config.name, { mode: "read" });
     const { email, password } = userCredentials;
 
-    const res = db.queryEntries("SELECT * FROM users WHERE email = ?", [email]);
+    const res = db.queryEntries<User>("SELECT * FROM users WHERE email = ?", [email]);
     if (res.length === 0) {
         db.close();
         return
@@ -65,7 +65,7 @@ const login = (userCredentials: { email: string; password: string }) => {
 
 const getById = (id: number) => {
     const db = new DB(database.config.name, { mode: "read" });
-    const res = db.queryEntries("SELECT * FROM users WHERE id = ?", [id]);
+    const res = db.queryEntries<User>("SELECT * FROM users WHERE id = ?", [id]);
     if (res.length === 0) {
         db.close();
         return
@@ -77,10 +77,10 @@ const getById = (id: number) => {
     return user;
 };
 
-const toUser = (rowObj: RowObject): User => {
+const toUser = (rawUser: User): User => {
     // deno-lint-ignore no-unused-vars
-    const { password, ...user } = rowObj;
-    return user as unknown as User;
+    const { password, ...user } = rawUser;
+    return user as User;
 };
 
 const createToken = async (id: string) => {
