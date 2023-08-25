@@ -30,16 +30,15 @@ Deno.test("Signup, login and fetch user info", async () => {
     app.database.initialise("test");
 
     // signup
-    const signupResp = await app.api.request("http://localhost/api/users", {
+    const signupResp = await app.api.request("https://localhost/api/users", {
         method: "POST",
-        body:
-            JSON.stringify({
-                user: {
-                    username: "test-user",
-                    password: "test-pass",
-                    email: "t@test.com"
-                }
-            })
+        body: JSON.stringify({
+            user: {
+                username: "test-user",
+                password: "test-pass",
+                email: "t@test.com",
+            }
+        })
     });
 
     // assert signup response

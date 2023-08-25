@@ -1,8 +1,8 @@
 {
   "imports": {
     "@/": "./src/",
-    "std/": "https://deno.land/std@0.166.0/",
-    "hono/": "https://deno.land/x/hono@v2.5.6/",
+    "std/": "https://deno.land/std@0.200.0/",
+    "hono/": "https://deno.land/x/hono@v3.5.4/",
     "bcrypt": "https://deno.land/x/bcrypt@v0.4.1/mod.ts",
     "sqlite": "https://deno.land/x/sqlite@v3.7.0/mod.ts"
   }
